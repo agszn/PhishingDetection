@@ -32,7 +32,7 @@
 ![Dashboard](asset/images/dashboard.png)
 
 ### Phishing Detection (Algorithm Comparison)
-![Algorithm Comparison](asset/images/algoompare.png)
+![Algorithm Comparison](asset/images/AlgoCompare.png)
 
 ### Text Analysis Input
 ![Text Analysis Input](asset/images/TextAnalysusInput.png)
