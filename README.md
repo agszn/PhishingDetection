@@ -17,34 +17,34 @@
 ## Screenshots
 
 ### Home
-![Home](assets/images/home.png)
+![Home](asset/images/home.png)
 
 ### About
-![About](assets/images/about.png)
+![About](asset/images/about.png)
 
 ### Login
-![Login](assets/images/login.png)
+![Login](asset/images/login.png)
 
 ### Profile
-![Profile](assets/images/profile.png)
+![Profile](asset/images/profile.png)
 
 ### Dashboard
-![Dashboard](assets/images/dashboard.png)
+![Dashboard](asset/images/dashboard.png)
 
 ### Phishing Detection (Algorithm Comparison)
-![Algorithm Comparison](assets/images/algoompare.png)
+![Algorithm Comparison](asset/images/algoompare.png)
 
 ### Text Analysis Input
-![Text Analysis Input](assets/images/TextAnalysusInput.png)
+![Text Analysis Input](asset/images/TextAnalysusInput.png)
 
 ### Text Analysis Output
-![Text Analysis Output](assets/images/TextAnalysisOutput.png)
+![Text Analysis Output](asset/images/TextAnalysisOutput.png)
 
 ### Contact
-![Contact](assets/images/contact.png)
+![Contact](asset/images/contact.png)
 
 ### Graphical Report
-![Graph](assets/images/graph.png)
+![Graph](asset/images/graph.png)
 
 ---
 
