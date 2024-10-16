@@ -35,7 +35,7 @@
 ![Algorithm Comparison](asset/images/AlgoCompare.png)
 
 ### Text Analysis Input
-![Text Analysis Input](asset/images/TextAnalysusInput.png)
+![Text Analysis Input](asset/images/TextAnalysisInput.png)
 
 ### Text Analysis Output
 ![Text Analysis Output](asset/images/TextAnalysisOutput.png)
