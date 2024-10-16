@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Model{% endblock %}
+
+{% block style %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        text-align: center;
+        font-size: 2.5em;
+        margin-top: 20px;
+        color: #333;
+        margin-bottom: 40px;
+    }
+
+    .result-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+    }
+
+    .result-box {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .result-box p {
+        font-size: 18px;
+        margin: 10px 0;
+        color: #333;
+    }
+
+    .result-box p strong {
+        color: #000;
+    }
+</style>
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<h1 class="header" style="color: white;">Analysis Result</h1>
+<div class="result-container">
+    <div class="result-box">
+        <p><strong>Text:</strong> {{ result.text }}</p>
+        <p><strong>Phishing:</strong> {{ result.is_phishing }}</p>
+        <!-- {% if result.is_phishing %}
+            <p><strong>Phishing Parameters:</strong> {{ result.phishing_parameters }}</p>
+        {% endif %} -->
+        <p><strong>Cyberbullying:</strong> {{ result.is_cyberbullying }}</p>
+        <!-- {% if result.is_cyberbullying %}
+            <p><strong>Bullying Type:</strong> {{ result.bullying_type }}</p>
+            <p><strong>Bully Parameters:</strong> {{ result.bully_parameters }}</p>
+        {% endif %} -->
+    </div>
+</div>
+{% endblock %}

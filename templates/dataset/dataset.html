@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% block title %}Dataset Display{% endblock %}
+
+{% block style %}
+<style>
+    .table-container {
+        max-width: 1500px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    table, th, td {
+        border: 1px solid #dee2e6;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
+    .pagination a, .pagination span {
+        margin: 0 5px;
+        padding: 8px 16px;
+        border: 1px solid #dee2e6;
+        color: #007bff;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+    .pagination .current {
+        background-color: #007bff;
+        color: #fff;
+        border: 1px solid #007bff;
+    }
+    .pagination .disabled {
+        color: #dee2e6;
+        pointer-events: none;
+    }
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+    .card {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .chart-container {
+        position: relative;
+        height: 200px;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+</style>
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<div class="card-container">
+    <div class="card">
+        <h3>Random Forest</h3>
+        <div class="chart-container">
+            <canvas id="randomForestChart"></canvas>
+        </div>
+    </div>
+    <div class="card">
+        <h3>SVM</h3>
+        <div class="chart-container">
+            <canvas id="svmChart"></canvas>
+        </div>
+    </div>
+    <div class="card">
+        <h3>XGBoost</h3>
+        <div class="chart-container">
+            <canvas id="xgboostChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <h1>Dataset</h1>
+    {% if headers and adjusted_data %}
+    <table>
+        <thead>
+            <tr>
+                {% for header in headers %}
+                <th>{{ header }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in adjusted_data %}
+            <tr>
+                {% for cell in row %}
+                <td>{{ cell }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Column pagination -->
+    <div class="pagination">
+        {% if page_obj_columns.has_previous %}
+            <a href="?page_columns=1&page_rows={{ page_obj_rows.number }}">&laquo; first columns</a>
+            <a href="?page_columns={{ page_obj_columns.previous_page_number }}&page_rows={{ page_obj_rows.number }}">&lt; prev columns</a>
+        {% else %}
+            <span class="disabled">&laquo; first columns</span>
+            <span class="disabled">&lt; prev columns</span>
+        {% endif %}
+
+        {% if page_obj_columns.has_next %}
+            <a href="?page_columns={{ page_obj_columns.next_page_number }}&page_rows={{ page_obj_rows.number }}">next columns &gt;</a>
+            <a href="?page_columns={{ page_obj_columns.paginator.num_pages }}&page_rows={{ page_obj_rows.number }}">last columns &raquo;</a>
+        {% else %}
+            <span class="disabled">next columns &gt;</span>
+            <span class="disabled">last columns &raquo;</span>
+        {% endif %}
+    </div>
+
+    <!-- Row pagination -->
+    <div class="pagination">
+        {% if page_obj_rows.has_previous %}
+            <a href="?page_rows=1&page_columns={{ page_obj_columns.number }}">&laquo; first rows</a>
+            <a href="?page_rows={{ page_obj_rows.previous_page_number }}&page_columns={{ page_obj_columns.number }}">&lt; prev rows</a>
+        {% else %}
+            <span class="disabled">&laquo; first rows</span>
+            <span class="disabled">&lt; prev rows</span>
+        {% endif %}
+
+        {% for num in page_obj_rows.paginator.page_range %}
+            {% if page_obj_rows.number == num %}
+                <span class="current">{{ num }}</span>
+            {% elif num > page_obj_rows.number|add:'-5' and num < page_obj_rows.number|add:'5' %}
+                <a href="?page_rows={{ num }}&page_columns={{ page_obj_columns.number }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj_rows.has_next %}
+            <a href="?page_rows={{ page_obj_rows.next_page_number }}&page_columns={{ page_obj_columns.number }}">next rows &gt;</a>
+            <a href="?page_rows={{ page_obj_rows.paginator.num_pages }}&page_columns={{ page_obj_columns.number }}">last rows &raquo;</a>
+        {% else %}
+            <span class="disabled">next rows &gt;</span>
+            <span class="disabled">last rows &raquo;</span>
+        {% endif %}
+    </div>
+    {% else %}
+    <p>No data available in the CSV file.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const randomForestData = {
+        labels: ['Accuracy', 'Jaccard Index', 'F1 Score', 'Log Loss'],
+        datasets: [{
+            label: 'Random Forest',
+            data: [0.9658792650918635, 0.9329320722269991, 0.9653024911032029, 1.2298359424108216],
+            backgroundColor: ['#007bff', '#6f42c1', '#28a745', '#dc3545'],
+        }]
+    };
+
+    const svmData = {
+        labels: ['Accuracy', 'Jaccard Index', 'F1 Score', 'Log Loss'],
+        datasets: [{
+            label: 'SVM',
+            data: [0.9654418197725284, 0.9321888412017167, 0.9649044868947134, 1.2456030698776273],
+            backgroundColor: ['#007bff', '#6f42c1', '#28a745', '#dc3545'],
+        }]
+    };
+
+    const xgboostData = {
+        labels: ['Accuracy', 'Jaccard Index', 'F1 Score', 'Log Loss'],
+        datasets: [{
+            label: 'XGBoost',
+            data: [0.9466316710411199, 0.8983333333333333, 0.9464442493415276, 1.9235895509502592],
+            backgroundColor: ['#007bff', '#6f42c1', '#28a745', '#dc3545'],
+        }]
+    };
+
+    const config = (ctx, data) => {
+        return {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+    };
+
+    const randomForestChart = new Chart(document.getElementById('randomForestChart'), config('randomForestChart', randomForestData));
+    const svmChart = new Chart(document.getElementById('svmChart'), config('svmChart', svmData));
+    const xgboostChart = new Chart(document.getElementById('xgboostChart'), config('xgboostChart', xgboostData));
+</script>
+{% endblock %}

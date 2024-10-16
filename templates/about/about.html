@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block style %}
+<style>
+    /* Additional CSS styles */
+    .about {
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        max-width: 800px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 3D effect with box-shadow */
+        background-color: #fff; /* Background color for better contrast */
+    }
+
+    .about h1 {
+        text-align: center;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Text shadow for 3D effect */
+        color: #333; /* Text color */
+    }
+
+    .about p {
+        font-weight: bold;
+        font-size: 1.2em;
+        line-height: 1.6;
+    }
+
+    .about hr {
+        border-top: 1px solid #ccc; /* Horizontal rule style */
+        margin: 20px 0;
+    }
+
+    .about-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .about-img img {
+        max-width: 200px;
+        border-radius: 5px;
+        margin-right: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 3D effect on image */
+    }
+
+    .about-text {
+        flex: 1;
+    }
+
+    .btn {
+        margin-left: 20%;
+    }
+</style>
+{% endblock %}
+
+{% block index %}
+{% endblock %}
+
+{% block content %}
+<section class="about">
+    <h1>About Us</h1>
+    <div class="about-info">
+        <div class="about-img">
+            <img src="https://static.vecteezy.com/system/resources/previews/030/492/349/non_2x/cyber-security-concept-with-circuit-board-and-padlock-3d-rendering-ai-generated-free-photo.jpg" alt="About Image">
+        </div>
+        <div class="about-text">
+            <p>
+                Welcome to Security Analytics, where users engage in secure conversations, share valuable information, and create insightful content. Our platform is designed with your security in mind, ensuring a safe and enriching experience for all users.
+            </p>
+            <p>
+                Whether you're here to learn, share, or connect, Security Analytics provides the tools and environment you need to thrive. Join our community today and experience the difference in secure communication and content creation.
+            </p>
+        </div>
+    </div>
+    <hr>
+    <p>
+        For more information, please contact us at <a href="{% url 'contact' %}">Contact Us</a>.
+    </p>
+</section>
+{% endblock %}
